@@ -5,6 +5,10 @@ import 'package:swift/Controles/BLoC/BlocLogin.dart';
 import 'package:swift/util/util.dart';
 
 class LoginPage extends StatelessWidget {
+
+  String _email;
+  String _password;
+
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
@@ -29,11 +33,14 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Padding(padding: EdgeInsets.only(top: height * 0.3)),
-                  Image.asset('asset/swift.png'),
+                  Image.asset('asset/swift.png',),
                   Container(
                     width: width * 0.9,
                     height: 50,
                     child: TextField(
+                      onChanged: (t){
+                        _email = t;
+                      },
                       decoration: InputDecoration(
                         labelText: "Email",
                         border: OutlineInputBorder(
@@ -41,11 +48,11 @@ class LoginPage extends StatelessWidget {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide(
-                              color: Color.fromRGBO(176, 196, 222, 1)),
+                              color: Color(0xff8fc2ea)),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Color.fromRGBO(176, 196, 222, 1)),
+                              color: Color(0xff8fc2ea)),
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         ),
                       ),
@@ -56,6 +63,9 @@ class LoginPage extends StatelessWidget {
                       width: width * 0.9,
                       height: 50,
                       child: TextField(
+                        onChanged: (t){
+                        _password = t;
+                      },
                         decoration: InputDecoration(
                           labelText: "Senha",
                           border: OutlineInputBorder(
@@ -63,10 +73,10 @@ class LoginPage extends StatelessWidget {
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                               borderSide: BorderSide(
-                                  color: Color.fromRGBO(176, 196, 222, 1))),
+                                  color: Color(0xff8fc2ea))),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Color.fromRGBO(176, 196, 222, 1)),
+                                color: Color(0xff8fc2ea)),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20.0)),
                           ),
@@ -74,9 +84,9 @@ class LoginPage extends StatelessWidget {
                       )),
                   Padding(padding: EdgeInsets.only(top: 15)),
                   RaisedButton(
-                      onPressed: () {},
+                      onPressed:(){ bloc.userSubmit(_email, _password, false);},
                       child: Text('Login'),
-                      color: Color.fromRGBO(176, 196, 222, 1),
+                      color: Color(0xff8fc2ea),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20))),
                   Padding(padding: EdgeInsets.only(top: 10)),
