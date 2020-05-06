@@ -49,6 +49,8 @@ flutter:
   assets:
     - asset/swift.png
     - asset/test.jpg
+    - asset/plane.gif
+    - asset/sx.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
