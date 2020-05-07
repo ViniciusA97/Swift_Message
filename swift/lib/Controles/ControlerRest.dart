@@ -9,7 +9,7 @@ import 'package:swift/Model/User.dart';
 class ControlRest{
 
   String _token;
-  final url = "http://192.168.0.20:8080";
+  final url = "http://192.168.1.102:8080";
   HttpClient _httpClient;
   IOClient _client ;
   DatabaseHelper _db;
@@ -39,8 +39,8 @@ class ControlRest{
     try{
       Response response = await this._client.post(this.url+"/client/login",body: user);
       var responseJson = JSON.jsonDecode(response.body);
+      print("************\nresponse Json Login: $responseJson\n****************");
       if(response.statusCode == 202){
-        print(response.headers);
         User user = User.mapJSON(responseJson);
         if(save) this._db.saveUser(user);
         return user;
@@ -76,7 +76,7 @@ class ControlRest{
       if(response.statusCode==302){
         List<Chat> chats = new List<Chat>();
         var chatsJson = JSON.jsonDecode(response.body);
-        print(chatsJson);
+        print("***************************\nJSON chat: $chatsJson\n**************************");
       }
     }catch(err){
       print("***************\nErro Chat: ${err.toString()}\n***************");

@@ -2,6 +2,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:swift/Controles/BLoC/BlocLogin.dart';
+import 'package:swift/Model/User.dart';
 import 'package:swift/View/HomeUserPage/HomePageUser.dart';
 import 'package:swift/util/util.dart';
 
@@ -27,7 +28,7 @@ class Sign extends StatelessWidget{
     return 
     StreamBuilder(
       stream: bloc.userStream,
-      builder: (context,snapshot){
+      builder: (context, AsyncSnapshot<User> snapshot){
         return Container(
       color: Colors.white60,
       height: height,
@@ -66,7 +67,7 @@ class Sign extends StatelessWidget{
                 RaisedButton(
                       onPressed:() async{ 
                         bool cond = await bloc.userCreate(_emailControler.text, _nameControler.text, _passwordControler.text);
-                        cond? Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePageUser(snapshot.data)))
+                        cond? Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePageUser(user: snapshot.data,)))
                         : print("Erro no signup");
                         },
                       child: Text('Criar'),

@@ -1,6 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:swift/Controles/ControlerRest.dart';
+import 'package:swift/Model/Chat.dart';
 import 'package:swift/Model/User.dart';
 
 class BlocHome extends BlocBase{
@@ -22,12 +23,14 @@ class BlocHome extends BlocBase{
 
   Future<bool> userCreate(String email, String name, String password) async{
     User user =await controlRest.create(email, name, password);
+    print("*****\n user return : $user");
     if(user!=null){
         _userStream.sink.add(user);
         return true;
       }
       return false;
   }
+
 
   @override
   void dispose() {

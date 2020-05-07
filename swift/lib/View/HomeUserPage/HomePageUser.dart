@@ -3,14 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:swift/Controles/BLoC/BlocChats.dart';
 import 'package:swift/Controles/BLoC/BlocLogin.dart';
+import 'package:swift/Model/Chat.dart';
 import 'package:swift/Model/User.dart';
 import 'package:swift/util/util.dart';
 
 class HomePageUser extends StatelessWidget{
   
-  User _user;
+  User user;
 
-  HomePageUser(this._user);
+  HomePageUser({this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -26,38 +27,36 @@ class HomePageUser extends StatelessWidget{
     
     BlocHome blocHome = BlocProvider.getBloc<BlocHome>();
     BlocChat blocChat = BlocProvider.getBloc<BlocChat>();
+    blocChat.getChatsUser(user);
 
-    blocChat.getChatsUser(_user);
+    return 
+    StreamBuilder(
+      stream: blocChat.chatStream,
+      builder: (context,AsyncSnapshot<List<Chat>> snapshot){
 
-    return Container(
+        if(!snapshot.hasData){
+          return Center(child: Text("Ainda sem chat"),);
+        }
+        else{
+          return
+            Container(
       width: width,
       height: height,
-      child: StreamBuilder(
-        stream: blocChat.chatStream,
-        builder: (context, snapshot){
-          if(snapshot.hasData && !snapshot.hasError){
-            print(snapshot.data);
-            return Container(
-              width: width-10,
-              height: height*0.8,
-              child: ListView.builder(
-                itemBuilder: null
-              ),
-            );
-          }else{
-            return Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text('Você ainda não esta em nenhum chat')
-                ],
-              ),
-            );
-          }
+      child: ListView.builder(
+        itemCount: snapshot.data.length,
+        itemBuilder: (context,int index){
+          return Container(
+            width: width -10,
+            height: 50,
+            color: Colors.black,
+          );
         }
-      )
-    );
+        )
+      );
+        }
+
+    });
+    
   }
 
 }
