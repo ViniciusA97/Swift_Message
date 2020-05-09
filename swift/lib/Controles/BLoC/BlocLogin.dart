@@ -7,12 +7,14 @@ import 'package:swift/Model/Chat.dart';
 import 'package:swift/Model/User.dart';
 import 'package:swift/View/HomeUserPage/HomePageUser.dart';
 
-class BlocHome extends BlocBase{
+class BlocLogin extends BlocBase{
 
   ControlRest controlRest = ControlRest.getInstance();
 
   final _userStream = BehaviorSubject<User>();
-
+  final _allUsers = BehaviorSubject<List<User>>();
+  
+  Observable<List<User>> get allUserStream => _allUsers.stream;
   Observable<User> get userStream => _userStream.stream;
 
   Future<bool> userSubmit(String email, String password, bool save, BuildContext context) async{
@@ -38,6 +40,7 @@ class BlocHome extends BlocBase{
   @override
   void dispose() {
     _userStream.close();
+    _allUsers.close();
     super.dispose();
   }
 

@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget getLogin() {
-    BlocHome bloc = BlocProvider.getBloc<BlocHome>();
+    BlocLogin bloc = BlocProvider.getBloc<BlocLogin>();
     bloc.userStream.listen((event) {
       
      });

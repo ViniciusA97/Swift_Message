@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp>{
   Widget build(BuildContext context) {
     return BlocProvider(
       blocs:[
-        Bloc((i)=>BlocHome()),
+        Bloc((i)=>BlocLogin()),
         Bloc((i)=>BlocChat()),
       ],
       child: MaterialApp(

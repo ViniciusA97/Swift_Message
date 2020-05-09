@@ -17,6 +17,8 @@ double get widget => width;
 double get heigth => height;
 double get endpage => end_page;
 
+const ktextGrabiola = TextStyle(fontFamily: 'gabriola', color: color1);
+
 const kInput = InputDecoration(
   
   hintStyle: TextStyle(color: Colors.white),

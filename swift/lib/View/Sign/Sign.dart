@@ -24,7 +24,7 @@ class Sign extends StatelessWidget{
 
   Widget getBody(){
     
-    BlocHome bloc = BlocProvider.getBloc<BlocHome>();
+    BlocLogin bloc = BlocProvider.getBloc<BlocLogin>();
     return 
     StreamBuilder(
       stream: bloc.userStream,
