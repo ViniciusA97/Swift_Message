@@ -1,13 +1,13 @@
-class Client{
+class User{
 
   String _name;
   String _password;
   String _email;
   int _id;
 
-  Client(this._name,this._email,this._password);
+  User(this._name,this._email,this._password);
 
-  Client.mapJSON(dynamic obj){
+  User.mapJSON(dynamic obj){
     this._name = obj['name'];
     this._password = obj['password'];
     this._email = obj['email'];

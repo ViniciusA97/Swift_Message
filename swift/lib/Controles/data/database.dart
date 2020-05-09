@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:swift/Model/Client.dart';
+import 'package:swift/Model/User.dart';
 
 class DatabaseHelper {
 
@@ -20,23 +20,27 @@ class DatabaseHelper {
   initDb() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path, "main.db");
-    var ourDb = await openDatabase(path, version: 1,onCreate: _onCreate);
+    var ourDb = await openDatabase(path, version: 1,onCreate: _onCreate, onConfigure: _onConfigure);
         return ourDb;
   }    
+
+  void _onConfigure(Database db)async {
+      await db.execute("PRAGMA foreign_keys = ON");
+  }
    
   void _onCreate(Database db, int version) async{
     await db.execute(
       '''
         CREATE TABLE client(
-            id INTEGER,
-            email TEXT,
-            name TEXT,
-            password TEXT
+            id INTEGER PRIMARY KEY,
+            email TEXT UNIQUE,
+            name TEXT UNIQUE,
+            password TEXT UNIQUE
         );
       ''');
   }
 
-  Future<bool> saveUser(Client c) async {
+  Future<bool> saveUser(User c) async {
     
     var dbClient = await this.db;
     try{
@@ -50,7 +54,7 @@ class DatabaseHelper {
     }
   }
 
-  Future<List<Client>> getUsers()async{
+  Future<List<User>> getUsers()async{
     
     var local = await this.db;
     try{
@@ -58,9 +62,9 @@ class DatabaseHelper {
         '''
         SELECT * FROM client
         ''');
-      List<Client> clients = List<Client>();
+      List<User> clients = List<User>();
       for(Map i in response){
-        clients.add(Client.mapJSON(i));
+        clients.add(User.mapJSON(i));
       }
       return clients;
     
@@ -70,14 +74,14 @@ class DatabaseHelper {
 
   }
 
-  Future<Client> getUserName(String email)async{
+  Future<User> getUserName(String email)async{
     var dbClient = await this.db;
     try{
       dynamic response = await dbClient.rawQuery(
         '''
         SELECT * FROM client WHERE email = $email
       ''');
-      return Client.mapJSON(response);
+      return User.mapJSON(response);
     }catch(err){
       return null;
     }
