@@ -9,7 +9,7 @@ import 'package:swift/Model/User.dart';
 class ControlRest{
 
   String _token;
-  final url = "http://192.168.1.102:8080";
+  final url = "http://192.168.1.105:8080";
   HttpClient _httpClient;
   IOClient _client ;
   DatabaseHelper _db;
@@ -71,13 +71,21 @@ class ControlRest{
   }
 
   Future<List<Chat>> getChats(int idUser) async{
+    print('id user:  $idUser');
     try{
-      Response response = await this._client.post(url+"/chat/getChats/$idUser");
-      if(response.statusCode==302){
+      Response response = await this._client.get(url+"/chat/getChats/$idUser");
+      print('${response.statusCode}');
+      if(response.statusCode==202){
         List<Chat> chats = new List<Chat>();
-        var chatsJson = JSON.jsonDecode(response.body);
-        print("***************************\nJSON chat: $chatsJson\n**************************");
+        List<dynamic> chat = JSON.jsonDecode(response.body);
+        for(dynamic i in chat){
+          chats.add(Chat.mapJSON(i));
+        }
+        print("***************************\nJSON chat: $chat\n**************************");
+        //print("***************************\nresponse chat: $response\n**************************");
+        return chats;
       }
+      return null;
     }catch(err){
       print("***************\nErro Chat: ${err.toString()}\n***************");
       return null;

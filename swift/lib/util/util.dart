@@ -3,14 +3,19 @@ import 'package:flutter/material.dart';
 
 var width = 0.0;
 var height = 0.0;
+var end_page= 0.0;
 
 set(double w, double h){
   width=w;
   height=h;
+  end_page = h;
 }
+
+const color1 = Color.fromRGBO(143, 194, 234, 100);
 
 double get widget => width;
 double get heigth => height;
+double get endpage => end_page;
 
 const kInput = InputDecoration(
   

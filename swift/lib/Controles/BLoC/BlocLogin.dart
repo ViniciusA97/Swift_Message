@@ -1,8 +1,11 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:swift/Controles/ControlerRest.dart';
 import 'package:swift/Model/Chat.dart';
 import 'package:swift/Model/User.dart';
+import 'package:swift/View/HomeUserPage/HomePageUser.dart';
 
 class BlocHome extends BlocBase{
 
@@ -12,11 +15,11 @@ class BlocHome extends BlocBase{
 
   Observable<User> get userStream => _userStream.stream;
 
-  Future<bool> userSubmit(String email, String password, bool save) async{
+  Future<bool> userSubmit(String email, String password, bool save, BuildContext context) async{
       User user =await controlRest.login(email, password, save);
       if(user!=null){
         _userStream.sink.add(user);
-        return true;
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePageUser(user: user)));
       }
       return false;
   }

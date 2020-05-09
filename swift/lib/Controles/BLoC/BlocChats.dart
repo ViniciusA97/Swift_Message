@@ -11,8 +11,11 @@ class BlocChat extends BlocBase{
 
   Observable<List<Chat>> get chatStream => _chatStream.stream;
 
-  void getChatsUser(User u){
-    controlRest.getChats(u.id);
+  void getChatsUser(User u)async{
+    List<Chat> chats = await controlRest.getChats(u.id);
+    chats!=null?
+    _chatStream.add(chats)
+    :print('');
   }
 
   @override
